@@ -1,1 +1,36 @@
 
+class Solution {
+
+    int MOD = 1_000_000_007;
+    // It will return total people contribute till nth day
+    public int peopleAwareOfSecret(int n, int delay, int forget) {
+        int total = 0;
+        int[] memo = new int[n+1];
+        for(int i=0; i<=n; i++){
+            memo[i] = -1;
+        }
+
+        for(int day = n-forget+1; day <= n; day++){
+            if(day>0){
+                total = (total + solve(day, delay, forget, memo))%MOD;
+            }
+        }
+        return total;
+    }
+// It will return the number of people going to contribute till day
+    public int solve(int day, int delay, int forget, int[] memo){
+        if(day == 1){
+            return 1;
+        }
+        if(memo[day] != -1){
+            return memo[day];
+        }
+        int result = 0;
+        for(int prev=day-forget+1; prev<=day-delay; prev++){
+            if(prev > 0){
+                result = (result + solve(prev, delay, forget, memo))%MOD;
+            }
+        }
+        return memo[day] = result;
+    }
+}
