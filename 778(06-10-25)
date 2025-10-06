@@ -21,7 +21,6 @@ class Solution {
             }
         }
         return result;
-        
     }
 
     public boolean possibleToReach(int[][] grid, int n, int i, int j, int t, boolean[][] visited){
