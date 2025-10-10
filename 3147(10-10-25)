@@ -1,0 +1,40 @@
+class Solution {
+    //Approach 1: using recursion
+
+    public int maximumEnergy1(int[] energy, int k) {
+        int n = energy.length;
+        int max_energy = Integer.MIN_VALUE;
+        int[] memo = new int[n];
+        Arrays.fill(memo, Integer.MIN_VALUE);
+
+        for(int i=0; i<n; i++){
+            max_energy = Math.max(max_energy, solve(energy, k, i, memo));
+        }
+        return max_energy;
+    }
+
+    public int solve(int[] energy, int k, int i, int[] memo){
+        if(i >= energy.length){
+            return 0;
+        }
+        if(memo[i] != Integer.MIN_VALUE){
+            return memo[i];
+        }
+
+        return energy[i] + solve(energy, k, i+k, memo);
+    }
+
+    public int maximumEnergy(int[] energy, int k) {
+        int maxEnergy = Integer.MIN_VALUE;
+        int n = energy.length;
+        int i = n-1;
+        while(i>=0){
+            if(i+k<n){
+                energy[i] += energy[i+k];
+            }
+            maxEnergy = Math.max(energy[i], maxEnergy);
+            i--;
+        }
+        return maxEnergy;
+    }
+}
